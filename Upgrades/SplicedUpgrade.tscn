@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp1fwd6kgixh"]
+
+[ext_resource type="Script" path="res://Upgrades/Scripts/SplicedUpgrade.gd" id="1_v66pv"]
+
+[node name="SplicedUpgrade" type="Node"]
+script = ExtResource("1_v66pv")

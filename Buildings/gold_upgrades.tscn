@@ -1,0 +1,411 @@
+[gd_scene load_steps=16 format=3 uid="uid://c4jwbqqjhbpe7"]
+
+[ext_resource type="Script" path="res://Buildings/gold_upgrades.gd" id="1_od138"]
+[ext_resource type="Texture2D" uid="uid://bkgmx1ymu6x1w" path="res://UI/Images/Wood_Sign_Split_Top.png" id="2_6xrhe"]
+[ext_resource type="Texture2D" uid="uid://c6v1t0viu6hvs" path="res://UI/Images/Hinge.png" id="3_kyrkw"]
+[ext_resource type="Texture2D" uid="uid://dewdujuxkgy8j" path="res://UI/Images/Wood_Sign_Split_Mid.png" id="4_a3st6"]
+[ext_resource type="Texture2D" uid="uid://crwh3341f0ink" path="res://UI/Images/Wood_Sign_Split_Bot.png" id="5_3f1cy"]
+[ext_resource type="PackedScene" uid="uid://iohdtu07l24s" path="res://UI/Upgrade.tscn" id="6_tidvi"]
+[ext_resource type="PackedScene" uid="uid://c12lrljtkq2of" path="res://UI/Coins/PengoldTextureRect.tscn" id="7_8f65i"]
+[ext_resource type="PackedScene" uid="uid://bd4fwjd3o8wbw" path="res://Upgrades/LinearUpgrade.tscn" id="8_yv4rp"]
+[ext_resource type="PackedScene" uid="uid://bakustw2mv28o" path="res://Upgrades/ExponentialUpgrade.tscn" id="11_puma8"]
+[ext_resource type="PackedScene" uid="uid://ddbpigxq6hmuu" path="res://Upgrades/DiminishingFalloffUpgrade.tscn" id="12_paius"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8ldr1"]
+
+[sub_resource type="Animation" id="Animation_kbi14"]
+resource_name = "panel_close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sign:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sign:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(860, 103), Vector2(1163, 103)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Toggle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(837, 282), Vector2(1126, 282)]
+}
+
+[sub_resource type="Animation" id="Animation_3s54e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sign:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sign:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(860, 103)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Toggle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(837, 282)]
+}
+
+[sub_resource type="Animation" id="Animation_2pxan"]
+resource_name = "panel_open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sign:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sign:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1163, 103), Vector2(860, 103)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Toggle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1126, 282), Vector2(837, 282)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jocco"]
+_data = {
+"RESET": SubResource("Animation_3s54e"),
+"panel_close": SubResource("Animation_kbi14"),
+"panel_open": SubResource("Animation_2pxan")
+}
+
+[node name="UpgradeUI" type="CanvasLayer" node_paths=PackedStringArray("coin_value", "coin_upgrade_cost", "global_peng_speed", "global_peng_carry", "global_bucket_speed") groups=["Persist Singleton"]]
+script = ExtResource("1_od138")
+coin_value = NodePath("Sign/Sidebar/CoinValue/LinearUpgrade")
+coin_upgrade_cost = NodePath("Sign/Sidebar/CoinPrices/DiminishingFalloffUpgrade")
+global_peng_speed = NodePath("Sign/Sidebar/GlobalPengSpeed/LinearUpgrade")
+global_peng_carry = NodePath("Sign/Sidebar/GlobalPengCarry/LinearUpgrade")
+global_bucket_speed = NodePath("Sign/Sidebar/GlobalBucketSpeed/LinearUpgrade")
+
+[node name="Toggle" type="Button" parent="."]
+self_modulate = Color(0.423529, 0.423529, 0.423529, 1)
+show_behind_parent = true
+z_index = -2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -315.0
+offset_top = 282.0
+offset_right = -166.596
+offset_bottom = 322.0
+grow_horizontal = 0
+rotation = -1.5708
+mouse_default_cursor_shape = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Toggle"]
+self_modulate = Color(0.764706, 0.666667, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.57501
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_8ldr1")
+
+[node name="Label" type="Label" parent="Toggle"]
+layout_mode = 0
+offset_left = 3.0
+offset_right = 145.0
+offset_bottom = 26.0
+text = "Pengold Upgrades"
+
+[node name="Sign" type="TextureRect" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -292.0
+offset_top = 103.0
+offset_right = -6.99805
+offset_bottom = 158.0
+grow_horizontal = 0
+texture = ExtResource("2_6xrhe")
+expand_mode = 1
+
+[node name="Hinge" type="TextureRect" parent="Sign"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 276.0
+offset_top = 6.0
+offset_right = 426.0
+offset_bottom = 156.0
+scale = Vector2(0.185, 0.3)
+texture = ExtResource("3_kyrkw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Middle" type="TextureRect" parent="Sign"]
+z_index = -1
+custom_minimum_size = Vector2(0, 67.66)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 37.7
+grow_horizontal = 2
+texture = ExtResource("4_a3st6")
+expand_mode = 1
+
+[node name="Hinge2" type="TextureRect" parent="Sign/Middle"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 276.0
+offset_top = -23.83
+offset_right = 426.0
+offset_bottom = 126.17
+grow_vertical = 2
+scale = Vector2(0.185, 0.3)
+texture = ExtResource("3_kyrkw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Bottom" type="TextureRect" parent="Sign/Middle"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.660004
+offset_bottom = 54.3401
+grow_horizontal = 2
+texture = ExtResource("5_3f1cy")
+expand_mode = 1
+
+[node name="Hinge" type="TextureRect" parent="Sign/Middle/Bottom"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 276.0
+offset_top = -1.0
+offset_right = 426.0
+offset_bottom = 149.0
+scale = Vector2(0.185, 0.3)
+texture = ExtResource("3_kyrkw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Sidebar" type="VBoxContainer" parent="Sign"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 51.0
+grow_horizontal = 2
+
+[node name="CoinValue" parent="Sign/Sidebar" node_paths=PackedStringArray("upgrade") instance=ExtResource("6_tidvi")]
+layout_mode = 2
+tooltip_text = "Increases the value of all Pencoins produced"
+label_text = "Pencoin Value: lvl %d"
+use_gold = true
+use_coin_price_upgrade = false
+upgrade = NodePath("LinearUpgrade")
+
+[node name="Label" parent="Sign/Sidebar/CoinValue" index="0"]
+text = "Pencoin Value"
+
+[node name="PengoldTextureRect" parent="Sign/Sidebar/CoinValue/Button/Coin" index="0" instance=ExtResource("7_8f65i")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="LinearUpgrade" parent="Sign/Sidebar/CoinValue" node_paths=PackedStringArray("cost_upgrade") instance=ExtResource("8_yv4rp")]
+step = 1.0
+cost_upgrade = NodePath("ExponentialUpgrade")
+
+[node name="ExponentialUpgrade" parent="Sign/Sidebar/CoinValue/LinearUpgrade" instance=ExtResource("11_puma8")]
+coefficient = 3.0
+base = 12.0
+
+[node name="CoinPrices" parent="Sign/Sidebar" node_paths=PackedStringArray("upgrade") instance=ExtResource("6_tidvi")]
+layout_mode = 2
+tooltip_text = "Decreases Pencoin upgrade prices"
+label_text = "Pencoin Prices: lvl %d"
+use_gold = true
+use_coin_price_upgrade = false
+upgrade = NodePath("DiminishingFalloffUpgrade")
+
+[node name="Label" parent="Sign/Sidebar/CoinPrices" index="0"]
+text = "Pencoin Prices"
+
+[node name="PengoldTextureRect" parent="Sign/Sidebar/CoinPrices/Button/Coin" index="0" instance=ExtResource("7_8f65i")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="DiminishingFalloffUpgrade" parent="Sign/Sidebar/CoinPrices" node_paths=PackedStringArray("cost_upgrade") instance=ExtResource("12_paius")]
+coefficient = 0.05
+cost_upgrade = NodePath("ExponentialUpgrade")
+
+[node name="ExponentialUpgrade" parent="Sign/Sidebar/CoinPrices/DiminishingFalloffUpgrade" instance=ExtResource("11_puma8")]
+coefficient = 5.0
+base = 30.0
+
+[node name="Spacer" type="Label" parent="Sign/Sidebar"]
+layout_mode = 2
+
+[node name="GlobalPengSpeed" parent="Sign/Sidebar" node_paths=PackedStringArray("upgrade") instance=ExtResource("6_tidvi")]
+layout_mode = 2
+tooltip_text = "More ergonomic shoes makes all Pengs run faster"
+label_text = "Peng Shoes: lvl %d"
+use_gold = true
+use_coin_price_upgrade = false
+upgrade = NodePath("LinearUpgrade")
+
+[node name="Label" parent="Sign/Sidebar/GlobalPengSpeed" index="0"]
+text = "Peng Shoes"
+
+[node name="PengoldTextureRect" parent="Sign/Sidebar/GlobalPengSpeed/Button/Coin" index="0" instance=ExtResource("7_8f65i")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="LinearUpgrade" parent="Sign/Sidebar/GlobalPengSpeed" node_paths=PackedStringArray("cost_upgrade") instance=ExtResource("8_yv4rp")]
+step = 15.0
+cost_upgrade = NodePath("ExponentialUpgrade")
+
+[node name="ExponentialUpgrade" parent="Sign/Sidebar/GlobalPengSpeed/LinearUpgrade" instance=ExtResource("11_puma8")]
+coefficient = 4.0
+base = 10.0
+
+[node name="GlobalPengCarry" parent="Sign/Sidebar" node_paths=PackedStringArray("upgrade") instance=ExtResource("6_tidvi")]
+layout_mode = 2
+tooltip_text = "Deepen the pockets on all Pengs to allow them to carry more"
+label_text = "Deep Pockets: lvl %d"
+use_gold = true
+use_coin_price_upgrade = false
+upgrade = NodePath("LinearUpgrade")
+
+[node name="Label" parent="Sign/Sidebar/GlobalPengCarry" index="0"]
+text = "Deep Pockets"
+
+[node name="PengoldTextureRect" parent="Sign/Sidebar/GlobalPengCarry/Button/Coin" index="0" instance=ExtResource("7_8f65i")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="LinearUpgrade" parent="Sign/Sidebar/GlobalPengCarry" node_paths=PackedStringArray("cost_upgrade") instance=ExtResource("8_yv4rp")]
+step = 1.0
+cost_upgrade = NodePath("ExponentialUpgrade")
+
+[node name="ExponentialUpgrade" parent="Sign/Sidebar/GlobalPengCarry/LinearUpgrade" instance=ExtResource("11_puma8")]
+coefficient = 4.0
+base = 35.0
+
+[node name="GlobalBucketSpeed" parent="Sign/Sidebar" node_paths=PackedStringArray("upgrade") instance=ExtResource("6_tidvi")]
+visible = false
+layout_mode = 2
+tooltip_text = "Increases the bucket speed of all mines"
+label_text = "Greased Chains: lvl %d"
+use_gold = true
+use_coin_price_upgrade = false
+upgrade = NodePath("LinearUpgrade")
+
+[node name="Label" parent="Sign/Sidebar/GlobalBucketSpeed" index="0"]
+text = "Greased Chains"
+
+[node name="PengoldTextureRect" parent="Sign/Sidebar/GlobalBucketSpeed/Button/Coin" index="0" instance=ExtResource("7_8f65i")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="LinearUpgrade" parent="Sign/Sidebar/GlobalBucketSpeed" node_paths=PackedStringArray("cost_upgrade") instance=ExtResource("8_yv4rp")]
+step = 15.0
+cost_upgrade = NodePath("ExponentialUpgrade")
+
+[node name="ExponentialUpgrade" parent="Sign/Sidebar/GlobalBucketSpeed/LinearUpgrade" instance=ExtResource("11_puma8")]
+coefficient = 3.5
+base = 15.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 6.0
+libraries = {
+"": SubResource("AnimationLibrary_jocco")
+}
+
+[connection signal="pressed" from="Toggle" to="." method="_on_toggle_pressed"]
+[connection signal="pressed" from="Sign/Sidebar/CoinValue/Button" to="." method="_on_upgrade_coin_value_pressed"]
+[connection signal="pressed" from="Sign/Sidebar/CoinPrices/Button" to="." method="_on_upgrade_coin_prices_pressed"]
+[connection signal="pressed" from="Sign/Sidebar/GlobalPengSpeed/Button" to="." method="_on_upgrade_peng_speed_pressed"]
+[connection signal="pressed" from="Sign/Sidebar/GlobalPengCarry/Button" to="." method="_on_upgrade_peng_carry_pressed"]
+[connection signal="pressed" from="Sign/Sidebar/GlobalBucketSpeed/Button" to="." method="_on_upgrade_bucket_speed_pressed"]
+
+[editable path="Sign/Sidebar/CoinValue"]
+[editable path="Sign/Sidebar/CoinPrices"]
+[editable path="Sign/Sidebar/GlobalPengSpeed"]
+[editable path="Sign/Sidebar/GlobalPengCarry"]
+[editable path="Sign/Sidebar/GlobalBucketSpeed"]

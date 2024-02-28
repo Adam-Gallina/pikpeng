@@ -1,0 +1,154 @@
+[gd_scene load_steps=2 format=3 uid="uid://bodua3ckl848c"]
+
+[sub_resource type="GDScript" id="GDScript_nspig"]
+script/source = "extends Node2D
+
+signal save_start
+signal save_end
+
+var SAVE_PATH = 'user://pikpeng.sav'
+@onready var RNG_SEED = int(randi() / 2)
+
+func reset_data(filename = ''):
+	if filename == '': filename = SAVE_PATH
+	
+	if not save_available(filename):
+		printerr(\"File '%s' does not exist, no save data to delete\" % filename)
+		RNG_SEED = int(randi() / 2)
+		return true
+	
+	var ec = DirAccess.remove_absolute(filename)
+	if ec == OK:
+		RNG_SEED = int(randi() / 2)
+		return true
+	
+	printerr(\"Could not delete '%s': Error Code %d\" % ec)
+	return false
+
+func save_and_exit(filename = ''):
+	for node in get_tree().get_nodes_in_group(\"Volatile\"):
+		node.on_quit()
+	save_all_data(filename)
+
+func save_all_data(filename = ''):
+	if filename == '': filename = SAVE_PATH
+	var f = FileAccess.open(filename, FileAccess.WRITE)
+	
+	var lines = []
+	for node in get_tree().get_nodes_in_group(\"Persist\"):
+		# Check the node is an instanced scene so it can be instanced again during load.
+		if node.scene_file_path.is_empty():
+			printerr(\"persistent node '%s' is not an instanced scene, skipped\" % node.name)
+			continue
+
+		# Check the node has a save function.
+		if !node.has_method(\"save\"):
+			printerr(\"persistent node '%s' is missing a save() function, skipped\" % node.name)
+			continue
+
+		var node_data = node.save()
+		var json = JSON.stringify(node_data)
+		lines.append(json)
+		
+	var singletons = {}
+	for node in get_tree().get_nodes_in_group('Persist Singleton'):
+		if !node.has_method(\"save\"):
+			printerr(\"persistent singleton node '%s' is missing a save() function, skipped\" % node.name)
+			continue
+			
+		var node_data = node.save()
+		singletons[node_data[0]] = node_data[1]
+	
+	var depths = Constants.GeodeSpawner.get_save_data()
+	
+	save_start.emit()
+	
+	f.store_line(JSON.stringify({
+		'data_version' : Constants.DATA_VERSION,
+		'rng_seed' : RNG_SEED,
+		'total_coins' : Stats.total_coins,
+		'total_gold' : Stats.total_gold,
+		'geode_depths_left' : depths[0],
+		'geode_depths_right' : depths[1]
+	}))
+	f.store_line(JSON.stringify({
+		'singletons' : singletons
+	}))
+	for l in lines: f.store_line(l)
+	
+	save_end.emit()
+
+func save_available(filename = ''):
+	if filename == '': filename = SAVE_PATH
+	
+	return FileAccess.file_exists(filename)
+
+func load_all_data(filename = ''):
+	if filename == '': filename = SAVE_PATH
+	
+	if not save_available(filename):
+		printerr(\"File '%s' does not exist, cannot load save data\" % filename)
+		return
+
+	var f = FileAccess.open(filename, FileAccess.READ)
+
+	# Constant Values
+	var js = f.get_line()
+	var json = JSON.new()
+	var res = json.parse(js)
+	if res == OK:
+		var data = json.get_data()
+
+		if data['data_version'] != Constants.DATA_VERSION:
+			printerr('Save data is in old format (%d) and no translation exists' % data['data_version'])
+			return
+
+		RNG_SEED = data['rng_seed']
+		Stats.total_coins = data['total_coins']
+		Stats.total_gold = data['total_gold']
+		var geode_depths = [data['geode_depths_left'], data['geode_depths_right']]
+		Constants.GeodeSpawner.spawn(geode_depths[0], geode_depths[1])
+	else:
+		printerr(\"JSON Parse Error (Constants): \", json.get_error_message(), \" in \", js, \" at line \", json.get_error_line())
+
+	# Singleton Values
+	js = f.get_line()
+	json = JSON.new()
+	res = json.parse(js)
+	if res == OK:
+		var data = json.get_data()
+		
+		for node in get_tree().get_nodes_in_group('Persist Singleton'):
+			if !node.has_method(\"on_load\"):
+				printerr(\"persistent node '%s' is missing an on_load() function, skipped\" % node.name)
+				continue
+			node.on_load(data['singletons'])
+	else:
+		printerr(\"JSON Parse Error (Singletons): \", json.get_error_message(), \" in \", js, \" at line \", json.get_error_line())
+
+	while f.get_position() < f.get_length():
+		var json_string = f.get_line()
+
+		json = JSON.new()
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			printerr(\"JSON Parse Error (Other): \", json.get_error_message(), \" in \", json_string, \" at line \", json.get_error_line())
+			continue
+
+		var node_data = json.get_data()
+
+		# Create the object that owns the line of data
+		var new_object = load(node_data[\"filename\"]).instantiate()
+
+		if new_object.has_method(\"on_load\"):
+			new_object.on_load(node_data)
+
+
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		save_and_exit()
+		get_tree().quit()
+"
+
+[node name="UserData" type="Node2D"]
+script = SubResource("GDScript_nspig")

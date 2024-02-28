@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://dh7v7lyre3lne"]
+
+[ext_resource type="Script" path="res://Geodes/GeodeGenerator.gd" id="1_keedw"]
+[ext_resource type="PackedScene" uid="uid://dop43373f4sde" path="res://Geodes/GeodeBase.tscn" id="2_a57v3"]
+[ext_resource type="PackedScene" uid="uid://btpxcr73jm1q6" path="res://Upgrades/DiminishingReturnUpgrade.tscn" id="3_daowi"]
+[ext_resource type="PackedScene" uid="uid://bp1fwd6kgixh" path="res://Upgrades/SplicedUpgrade.tscn" id="3_f74vo"]
+[ext_resource type="PackedScene" uid="uid://bakustw2mv28o" path="res://Upgrades/ExponentialUpgrade.tscn" id="3_ryfpo"]
+[ext_resource type="PackedScene" uid="uid://bd4fwjd3o8wbw" path="res://Upgrades/LinearUpgrade.tscn" id="4_g80nx"]
+
+[sub_resource type="Gradient" id="Gradient_8xdor"]
+offsets = PackedFloat32Array(0, 0.142857, 0.354286, 0.542857, 0.617143, 0.754286, 0.908571, 1)
+colors = PackedColorArray(0.647532, 0.593687, 0.920897, 1, 0.254902, 0.27451, 0.458824, 1, 0.431373, 0.301961, 0.215686, 1, 0.309918, 0.247515, 0.205913, 1, 0.309804, 0.247059, 0.207843, 1, 0.554309, 0.221724, 0, 1, 0.662928, 0.341224, 0.22683, 1, 0.647059, 0.592157, 0.921569, 1)
+
+[node name="GeodeFactory" type="Node"]
+script = ExtResource("1_keedw")
+GeodeScene = ExtResource("2_a57v3")
+GeodeCols = SubResource("Gradient_8xdor")
+GeodeColSteps = 50
+
+[node name="MineStrength" parent="." node_paths=PackedStringArray("upgrades") instance=ExtResource("3_f74vo")]
+steps = Array[float]([0.0, 5.0])
+upgrades = [NodePath("ExponentialUpgrade"), NodePath("DiminishingReturnUpgrade")]
+
+[node name="ExponentialUpgrade" parent="MineStrength" instance=ExtResource("3_ryfpo")]
+coefficient = 1.45
+base = 2.0
+
+[node name="DiminishingReturnUpgrade" parent="MineStrength" instance=ExtResource("3_daowi")]
+max_value = 500.0
+coefficient = 0.05
+base = 50.0
+
+[node name="ChuteStrength" parent="." node_paths=PackedStringArray("upgrades") instance=ExtResource("3_f74vo")]
+steps = Array[float]([0.0, 7.0])
+upgrades = [NodePath("ExponentialUpgrade"), NodePath("DiminishingReturnUpgrade")]
+
+[node name="ExponentialUpgrade" parent="ChuteStrength" instance=ExtResource("3_ryfpo")]
+base = 2.0
+
+[node name="DiminishingReturnUpgrade" parent="ChuteStrength" instance=ExtResource("3_daowi")]
+max_value = 500.0
+coefficient = 0.025
+base = 50.0
+
+[node name="Value" parent="." instance=ExtResource("4_g80nx")]
+step = 1.0
+base = 1.0

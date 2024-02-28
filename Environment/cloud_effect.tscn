@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cjwnyxblrdkvh"]
+
+[node name="Cloud" type="CPUParticles2D"]
+lifetime = 10.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 300)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_min = 10.7
+scale_amount_max = 20.0

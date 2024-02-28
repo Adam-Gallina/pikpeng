@@ -1,0 +1,99 @@
+[gd_scene load_steps=17 format=3 uid="uid://dop43373f4sde"]
+
+[ext_resource type="Script" path="res://Geodes/MineableGeode.gd" id="1_yh4gj"]
+[ext_resource type="Texture2D" uid="uid://j2ttr1h0rjnf" path="res://Geodes/Images/PH_Geode1.png" id="2_1e0w1"]
+[ext_resource type="Texture2D" uid="uid://c87ocfdi8ywaa" path="res://Geodes/Images/PH_Geode2.png" id="3_7ydk1"]
+[ext_resource type="Texture2D" uid="uid://dvbfjs3im6gb6" path="res://Geodes/Images/PH_Geode3.png" id="4_fl3e4"]
+[ext_resource type="Texture2D" uid="uid://bkls1w0doxi36" path="res://Geodes/Images/PH_Geode4.png" id="5_hxyxs"]
+[ext_resource type="Texture2D" uid="uid://d04t13qaa5rb7" path="res://Geodes/Images/PH_Geode5.png" id="6_4tapo"]
+[ext_resource type="Texture2D" uid="uid://wnupv8rnhwfi" path="res://Geodes/Images/PH_Geode6.png" id="7_8s6w3"]
+[ext_resource type="Texture2D" uid="uid://cvf4lefalvumb" path="res://Geodes/Images/PH_Geode7.png" id="8_li1ks"]
+[ext_resource type="Texture2D" uid="uid://6o18iu3etjon" path="res://Geodes/Images/PH_Geode8.png" id="9_2jqtx"]
+[ext_resource type="Texture2D" uid="uid://fn5xs72lk6l8" path="res://Geodes/Images/PH_Geode9.png" id="10_qxf7r"]
+[ext_resource type="Texture2D" uid="uid://xh2h2ys0nq5" path="res://Geodes/Images/PH_Geode10.png" id="11_avm4v"]
+[ext_resource type="Texture2D" uid="uid://780jyujohv44" path="res://Geodes/Images/Outlines/PH_Geode_Outline_Left.png" id="12_6ixj5"]
+[ext_resource type="Texture2D" uid="uid://b6k1w4hocp3as" path="res://Geodes/Images/Outlines/PH_Geode_Outline_Right.png" id="13_3endc"]
+[ext_resource type="Texture2D" uid="uid://cuhg73rntiv0q" path="res://Geodes/Images/Outlines/PH_Geode_Outline_Top.png" id="14_shtqm"]
+[ext_resource type="PackedScene" uid="uid://c3c18hfl6go6i" path="res://Geodes/GeodeVals.tscn" id="15_ekqsp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_da7wj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1e0w1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7ydk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fl3e4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hxyxs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4tapo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8s6w3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_li1ks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2jqtx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qxf7r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_avm4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_1e0w1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7ydk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fl3e4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_1e0w1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7ydk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fl3e4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Geode" type="Node2D" node_paths=PackedStringArray("deposit_point", "withdraw_point", "curr_stored")]
+script = ExtResource("1_yh4gj")
+base_max_storage = 1
+deposit_point = NodePath(".")
+withdraw_point = NodePath(".")
+curr_stored = [NodePath("GeodeVals")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_da7wj")
+frame_progress = 0.758491
+
+[node name="BorderLeft" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("12_6ixj5")
+
+[node name="BorderRight" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("13_3endc")
+
+[node name="BorderTop" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+texture = ExtResource("14_shtqm")
+
+[node name="GeodeVals" parent="." instance=ExtResource("15_ekqsp")]

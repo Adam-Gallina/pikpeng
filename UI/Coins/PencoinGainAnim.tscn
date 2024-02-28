@@ -1,0 +1,83 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy3lmb4agy3pw"]
+
+[ext_resource type="PackedScene" uid="uid://b5mu5x2knw7yl" path="res://UI/Coins/CoinTextureRect.tscn" id="1_yiqen"]
+
+[sub_resource type="GDScript" id="GDScript_vwukl"]
+script/source = "extends Control
+
+@export var drift_speed : float
+@export var max_offset : float
+
+func start_anim(pos : Vector2, amount : int):	
+	var sign = '+' if amount >= 0 else ''
+	$Label.text = sign + '%d' % amount
+	
+	global_position = pos + Vector2(-15, -15) + Vector2(-max_offset + randf() * max_offset * 2, 0)
+	$Timer.start()
+	show()
+	
+func _process(delta):
+	if $Timer.is_stopped(): return
+	
+	var t = $Timer.time_left / $Timer.wait_time
+	position += Vector2.UP * drift_speed * t * delta
+	modulate = Color(1, 1, 1, t)
+
+func _on_timer_timeout():
+	queue_free()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_r1txi"]
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="PencoinTextureRect" type="Control"]
+z_index = 50
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1122.0
+offset_bottom = -618.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_vwukl")
+drift_speed = 125.0
+max_offset = 25.0
+
+[node name="CoinTextureRect" parent="." instance=ExtResource("1_yiqen")]
+modulate = Color(0.603922, 0.909804, 1, 1)
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 1
+grow_vertical = 1
+pivot_offset = Vector2(15, 15)
+expand_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -3.0
+offset_right = 32.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "+3"
+label_settings = SubResource("LabelSettings_r1txi")
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

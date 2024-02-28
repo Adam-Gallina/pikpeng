@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://cb7jwy0j433ca"]
+
+[ext_resource type="Texture2D" uid="uid://df82wajdkeem7" path="res://UI/Spin/Spin1.png" id="1_ju2f8"]
+[ext_resource type="Texture2D" uid="uid://dm2a4h65rpvaf" path="res://UI/Spin/Spin2.png" id="2_1sovc"]
+[ext_resource type="Texture2D" uid="uid://bqcg07ba786sl" path="res://UI/Spin/Spin3.png" id="3_qmb42"]
+[ext_resource type="Texture2D" uid="uid://3mqshlllokgu" path="res://UI/Spin/Spin4.png" id="4_drh2a"]
+[ext_resource type="Texture2D" uid="uid://c125iwcoahq42" path="res://circle.png" id="5_ict4o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gfpj3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ju2f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_1sovc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qmb42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_drh2a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="LoadAnim" type="AnimatedSprite2D"]
+position = Vector2(1, 0)
+sprite_frames = SubResource("SpriteFrames_gfpj3")
+frame_progress = 0.128192
+speed_scale = 1.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+texture = ExtResource("5_ict4o")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+self_modulate = Color(0.6, 0.890196, 1, 1)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("5_ict4o")

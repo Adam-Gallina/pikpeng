@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://bilt772qof1fb"]
+
+[ext_resource type="Script" path="res://Geodes/GeodeSpawner.gd" id="1_hrnce"]
+[ext_resource type="PackedScene" uid="uid://dh7v7lyre3lne" path="res://Geodes/geode_factory.tscn" id="4_jqb2l"]
+[ext_resource type="Script" path="res://Upgrades/Scripts/SteppedUpgrade.gd" id="5_hbrv0"]
+[ext_resource type="PackedScene" uid="uid://bd4fwjd3o8wbw" path="res://Upgrades/LinearUpgrade.tscn" id="7_3kooj"]
+[ext_resource type="PackedScene" uid="uid://btpxcr73jm1q6" path="res://Upgrades/DiminishingReturnUpgrade.tscn" id="7_5e5ll"]
+
+[sub_resource type="Gradient" id="Gradient_5eiu8"]
+offsets = PackedFloat32Array(0.525714)
+colors = PackedColorArray(0.6, 0.501961, 0.172549, 1)
+
+[node name="GeodeSpawner" type="Node2D"]
+script = ExtResource("1_hrnce")
+
+[node name="LayerCounts" parent="." instance=ExtResource("7_3kooj")]
+step = 20.0
+base = 20.0
+
+[node name="GoldSpawnChance" parent="." instance=ExtResource("7_5e5ll")]
+max_value = 0.3
+coefficient = 0.03
+base = 0.05
+
+[node name="GeodeFactory" parent="." instance=ExtResource("4_jqb2l")]
+GeodeColSteps = 25
+
+[node name="GoldGeodeFactory" parent="." instance=ExtResource("4_jqb2l")]
+GeodeCols = SubResource("Gradient_5eiu8")
+ResourceType = 1
+
+[node name="MineStrength" parent="GoldGeodeFactory" index="0"]
+steps = Array[float]([0.0, 4.0])
+
+[node name="ExponentialUpgrade" parent="GoldGeodeFactory/MineStrength" index="0"]
+coefficient = 1.5
+base = 10.0
+
+[node name="DiminishingReturnUpgrade" parent="GoldGeodeFactory/MineStrength" index="1"]
+max_value = 750.0
+
+[node name="ChuteStrength" parent="GoldGeodeFactory" index="1"]
+steps = Array[float]([0.0, 6.0])
+
+[node name="ExponentialUpgrade" parent="GoldGeodeFactory/ChuteStrength" index="0"]
+coefficient = 1.1
+base = 10.0
+
+[node name="DiminishingReturnUpgrade" parent="GoldGeodeFactory/ChuteStrength" index="1"]
+max_value = 750.0
+
+[node name="Value" parent="GoldGeodeFactory" index="2" node_paths=PackedStringArray("upgrade")]
+script = ExtResource("5_hbrv0")
+step = 2
+upgrade = NodePath("LinearUpgrade")
+
+[node name="LinearUpgrade" parent="GoldGeodeFactory/Value" index="0" instance=ExtResource("7_3kooj")]
+step = 1.0
+base = 1.0
+
+[editable path="GeodeFactory"]
+[editable path="GoldGeodeFactory"]

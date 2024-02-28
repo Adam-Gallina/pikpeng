@@ -1,0 +1,106 @@
+[gd_scene load_steps=12 format=3 uid="uid://haq5aggch3tu"]
+
+[ext_resource type="Script" path="res://UI/BuildingPurchase.gd" id="1_3l62o"]
+[ext_resource type="PackedScene" uid="uid://07w8hopuanew" path="res://Buildings/Mines/GeodeMine.tscn" id="2_113la"]
+[ext_resource type="PackedScene" uid="uid://cgjyouhq6o660" path="res://Buildings/Grinder/Chute.tscn" id="3_edb6f"]
+[ext_resource type="Texture2D" uid="uid://bc4jvv6p7hubk" path="res://UI/Images/Metal_Sign.png" id="4_0qfy8"]
+[ext_resource type="PackedScene" uid="uid://bftdqf6nbd8hc" path="res://UI/Coins/PencoinTextureRect.tscn" id="4_k65fa"]
+[ext_resource type="PackedScene" uid="uid://bakustw2mv28o" path="res://Upgrades/ExponentialUpgrade.tscn" id="6_ndbd0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_642em"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_74ch1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yj0vp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nv4w"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3bvp6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Buildings" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -536.0
+offset_bottom = -284.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3l62o")
+MineScene = ExtResource("2_113la")
+ChuteScene = ExtResource("3_edb6f")
+
+[node name="BuyButton" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="BuyButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -119.0
+offset_right = 32.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_642em")
+theme_override_styles/hover = SubResource("StyleBoxFlat_74ch1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yj0vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_2nv4w")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3bvp6")
+text = "Buy Mine: 50       "
+
+[node name="TextureRect" type="NinePatchRect" parent="BuyButton/Button"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.5
+offset_top = -3.0
+offset_right = 249.88
+offset_bottom = 70.235
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("4_0qfy8")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="PencoinTextureRect" parent="BuyButton/Button" instance=ExtResource("4_k65fa")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+offset_left = -28.5
+offset_top = 3.0
+offset_right = -3.5
+offset_bottom = -3.0
+grow_horizontal = 0
+
+[node name="MineCost" parent="BuyButton" instance=ExtResource("6_ndbd0")]
+coefficient = 4.0
+base = 15.0
+
+[connection signal="pressed" from="BuyButton/Button" to="." method="_on_buy_mine_pressed"]

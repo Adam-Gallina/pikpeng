@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsl2g24ma14r3"]
+
+[ext_resource type="Texture2D" uid="uid://c6e5b4qd07l72" path="res://Buildings/Mines/Images/Corkscrew.png" id="1_x3scs"]
+
+[node name="animated_corkscrew" type="Sprite2D"]
+z_index = -7
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("1_x3scs")
+offset = Vector2(-2.225, 0)
+vframes = 10
+frame = 2

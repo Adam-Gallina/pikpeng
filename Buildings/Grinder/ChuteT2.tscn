@@ -1,0 +1,240 @@
+[gd_scene load_steps=20 format=3 uid="uid://cj62j0fds6cc8"]
+
+[ext_resource type="Script" path="res://Buildings/Grinder/ChuteT2.gd" id="1_nhyth"]
+[ext_resource type="PackedScene" uid="uid://dhxree050bv6n" path="res://Penguins/GrinderPenguin.tscn" id="2_5inkg"]
+[ext_resource type="PackedScene" uid="uid://serr76o4wx1r" path="res://Buildings/Grinder/ChuteT3.tscn" id="2_7h5fr"]
+[ext_resource type="Texture2D" uid="uid://bge5064gtoctg" path="res://Buildings/Grinder/Images/PH_Chute2.png" id="4_6qruv"]
+[ext_resource type="PackedScene" uid="uid://cy3lmb4agy3pw" path="res://UI/Coins/PencoinGainAnim.tscn" id="4_fx7g0"]
+[ext_resource type="Texture2D" uid="uid://dxvdps42nh1n0" path="res://Buildings/Grinder/Images/PH_Chute_T2.png" id="5_1ps5p"]
+[ext_resource type="PackedScene" uid="uid://5ie5maptxhem" path="res://UI/Coins/PengoldGainAnim.tscn" id="5_15y4m"]
+[ext_resource type="PackedScene" uid="uid://bytcpraxm8dp4" path="res://Buildings/BuildingInside.tscn" id="5_uir3d"]
+[ext_resource type="Texture2D" uid="uid://b2xrmmdwg4c1" path="res://Buildings/Grinder/Images/PH_Chute2_Outline.png" id="6_6e1e5"]
+[ext_resource type="PackedScene" uid="uid://xx51ktriaj5h" path="res://UI/CountSlider.tscn" id="7_ms2ht"]
+[ext_resource type="PackedScene" uid="uid://c12lrljtkq2of" path="res://UI/Coins/PengoldTextureRect.tscn" id="7_sje58"]
+[ext_resource type="PackedScene" uid="uid://crievlxl8sidb" path="res://Buildings/Grinder/chute_upgrades.tscn" id="8_7runh"]
+[ext_resource type="PackedScene" uid="uid://bftdqf6nbd8hc" path="res://UI/Coins/PencoinTextureRect.tscn" id="10_t132v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kcwvw"]
+size = Vector2(87.5, 41)
+
+[sub_resource type="Animation" id="Animation_g6i24"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cjtyo"]
+resource_name = "spin"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_fvdje"]
+resource_name = "spin_back"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.28319, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yn55k"]
+_data = {
+"RESET": SubResource("Animation_g6i24"),
+"spin": SubResource("Animation_cjtyo"),
+"spin_back": SubResource("Animation_fvdje")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wuvje"]
+bg_color = Color(1, 0.85098, 0.298039, 0.741176)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[node name="ChuteT2" type="Node2D" node_paths=PackedStringArray("saw_anims", "penguin_parent", "deposit_point", "withdraw_point") groups=["Persist"]]
+script = ExtResource("1_nhyth")
+geodes_per_gold = 50
+peng_path_offset = 30.0
+peng_path_width = 15.0
+saw_anims = [NodePath("Sprite2D/Saw/AnimationPlayer"), NodePath("Sprite2D/Saw2/AnimationPlayer"), NodePath("Sprite2D/Saw3/AnimationPlayer"), NodePath("Sprite2D/Saw4/AnimationPlayer")]
+building_width = 200
+next_tier = ExtResource("2_7h5fr")
+penguin_scene = ExtResource("2_5inkg")
+penguin_parent = NodePath(".")
+anim_offset = Vector2(50, -150)
+coin_anim = ExtResource("4_fx7g0")
+gold_anim = ExtResource("5_15y4m")
+deposit_point = NodePath(".")
+withdraw_point = NodePath(".")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 20
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_6qruv")
+offset = Vector2(0, -56.095)
+region_enabled = true
+region_rect = Rect2(91, 179, 330, 145)
+
+[node name="PhChuteT2" type="Sprite2D" parent="Sprite2D"]
+self_modulate = Color(0.576471, 0.576471, 0.576471, 1)
+z_index = -1
+position = Vector2(-18, -16)
+texture = ExtResource("5_1ps5p")
+offset = Vector2(0, -89.145)
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+position = Vector2(0, 8)
+scale = Vector2(4, 4)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(-0.25, -16)
+shape = SubResource("RectangleShape2D_kcwvw")
+
+[node name="Outline" type="Sprite2D" parent="Sprite2D"]
+z_index = -1
+texture = ExtResource("6_6e1e5")
+offset = Vector2(0, -56.095)
+region_enabled = true
+region_rect = Rect2(84, 172, 344, 159)
+
+[node name="Saw" type="Sprite2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(-94, -114)
+texture = ExtResource("4_6qruv")
+region_enabled = true
+region_rect = Rect2(195, 95, 64, 60)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D/Saw"]
+libraries = {
+"": SubResource("AnimationLibrary_yn55k")
+}
+
+[node name="Saw2" type="Sprite2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(-28, -114)
+texture = ExtResource("4_6qruv")
+region_enabled = true
+region_rect = Rect2(195, 95, 64, 60)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D/Saw2"]
+libraries = {
+"": SubResource("AnimationLibrary_yn55k")
+}
+
+[node name="Saw3" type="Sprite2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(32.8703, -114)
+texture = ExtResource("4_6qruv")
+region_enabled = true
+region_rect = Rect2(195, 95, 64, 60)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D/Saw3"]
+libraries = {
+"": SubResource("AnimationLibrary_yn55k")
+}
+
+[node name="Saw4" type="Sprite2D" parent="Sprite2D"]
+z_index = -1
+position = Vector2(98.8703, -114)
+texture = ExtResource("4_6qruv")
+region_enabled = true
+region_rect = Rect2(195, 95, 64, 60)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D/Saw4"]
+libraries = {
+"": SubResource("AnimationLibrary_yn55k")
+}
+
+[node name="CoinSlider" parent="." instance=ExtResource("7_ms2ht")]
+offset_left = -5.0
+offset_top = -145.0
+offset_right = 5.0
+offset_bottom = -85.0
+step = 0.01
+value = 10.0
+
+[node name="PencoinTextureRect" parent="CoinSlider" instance=ExtResource("10_t132v")]
+layout_mode = 1
+offset_left = -5.0
+offset_top = -36.0
+offset_right = 5.0
+offset_bottom = -76.0
+
+[node name="GoldSlider" parent="." instance=ExtResource("7_ms2ht")]
+offset_left = -28.0
+offset_top = -145.0
+offset_right = -18.0
+offset_bottom = -85.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_wuvje")
+value = 10.0
+
+[node name="PengoldTextureRect" parent="GoldSlider" instance=ExtResource("7_sje58")]
+layout_mode = 1
+offset_left = -5.0
+offset_top = -36.0
+offset_right = 5.0
+offset_bottom = -76.0
+
+[node name="Inside" parent="." instance=ExtResource("5_uir3d")]
+
+[node name="UpgradeUI" parent="." instance=ExtResource("8_7runh")]
+
+[node name="Sidebar" parent="UpgradeUI/Sign" index="2"]
+offset_bottom = 315.0
+
+[node name="ChuteTier" parent="UpgradeUI/Sign/Sidebar/UpgradeTier" index="2"]
+base = 150.0
+
+[node name="ClockSpeed" parent="UpgradeUI/Sign/Sidebar" index="5"]
+visible = false
+
+[connection signal="coin_percent" from="." to="CoinSlider" method="_set_fill"]
+[connection signal="gold_percent" from="." to="GoldSlider" method="_set_fill"]
+[connection signal="on_focus" from="." to="Sprite2D/Outline" method="show" unbinds=1]
+[connection signal="on_focus" from="." to="UpgradeUI" method="show" unbinds=1]
+[connection signal="on_unfocus" from="." to="Sprite2D/Outline" method="hide" unbinds=1]
+[connection signal="on_unfocus" from="." to="UpgradeUI" method="hide" unbinds=1]
+[connection signal="input_event" from="Sprite2D/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="on_upgrade_peng_count" from="UpgradeUI" to="." method="on_upgrade_peng_count"]
+[connection signal="on_upgrade_tier" from="UpgradeUI" to="." method="on_upgrade_building_tier"]
+
+[editable path="UpgradeUI"]
+[editable path="UpgradeUI/Sign/Sidebar/UpgradeTier"]
+[editable path="UpgradeUI/Sign/Sidebar/ProcessSpeed"]
+[editable path="UpgradeUI/Sign/Sidebar/SellValue"]
+[editable path="UpgradeUI/Sign/Sidebar/GoldEfficiency"]
+[editable path="UpgradeUI/Sign/Sidebar/ClockSpeed"]
+[editable path="UpgradeUI/Sign/Sidebar/ClockValue"]
+[editable path="UpgradeUI/Sign/Sidebar/PengCount"]
+[editable path="UpgradeUI/Sign/Sidebar/PengSpeed"]
+[editable path="UpgradeUI/Sign/Sidebar/PengCarry"]

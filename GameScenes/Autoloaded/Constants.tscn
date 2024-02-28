@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://buqsdjpe2qlw2"]
+
+[sub_resource type="GDScript" id="GDScript_rsp1r"]
+script/source = "extends Node
+
+var DATA_VERSION = 1
+
+var BUILDING = {
+	CHUTE = 0,
+	MINE = 1
+}
+var RESOURCE = {
+	COIN = 0,
+	GOLD = 1
+}
+var INTERACTION = {
+	NONE = -1,
+	DEPOSIT = 0,
+	WITHDRAW = 1
+}
+
+var MAIN_MENU_PATH = 'res://GameScenes/menu.tscn'
+var GAME_PATH = 'res://GameScenes/main.tscn'
+
+var _main = null
+func set_main(m): 
+	_main = m
+	_main_cam = Main.get_node('Camera2D')
+	_main_ui = Main.get_node('Camera2D/MainUI')
+	_gold_upgrades = Main.get_node('Camera2D/MainUI/UpgradeUI')
+	_building_controller = Main.get_node('Buildings')
+	_geode_spawner = Main.get_node('Environment/GeodeSpawner')
+var Main:
+	get:
+		if _main == null:
+			printerr('Call Constants.set_main() from root scene node...')
+		return _main
+
+var _main_cam = null
+var MainCam:
+	get:
+		if _main == null:
+			printerr('Call Constants.set_main() from root scene node...')
+		return _main_cam
+
+var _main_ui = null
+var MainUI:
+	get:
+		if _main == null:
+			printerr('Call Constants.set_main() from root scene node...')
+		return _main_ui
+		
+var _gold_upgrades = null
+var GoldUpgrades:
+	get:
+		if _main == null:
+			printerr('Call Constants.set_main() from root scene node...')
+		return _gold_upgrades
+
+var _building_controller = null
+var BuildingController:
+	get:
+		if _main == null:
+			printerr('Call Constants.set_main() from root scene node...')
+		return _building_controller
+
+var _geode_spawner = null
+var GeodeSpawner:
+	get:
+		if _main == null:
+			printerr('Call Constants.set_main() from root scene node...')
+		return _geode_spawner
+"
+
+[node name="Constants" type="Node2D"]
+script = SubResource("GDScript_rsp1r")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d17cffmo3tlg5"]
+
+[ext_resource type="Script" path="res://Upgrades/Scripts/SteppedUpgrade.gd" id="1_86ywl"]
+
+[node name="SteppedUpgrade" type="Node"]
+script = ExtResource("1_86ywl")

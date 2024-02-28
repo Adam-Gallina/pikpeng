@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bftdqf6nbd8hc"]
+
+[ext_resource type="PackedScene" uid="uid://b5mu5x2knw7yl" path="res://UI/Coins/CoinTextureRect.tscn" id="1_c8igt"]
+
+[node name="PencoinTextureRect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1002.0
+offset_bottom = -498.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CoinTextureRect" parent="." instance=ExtResource("1_c8igt")]
+modulate = Color(0.603922, 0.909804, 1, 1)
+layout_mode = 1
+expand_mode = 2

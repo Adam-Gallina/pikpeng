@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhxree050bv6n"]
+
+[ext_resource type="Script" path="res://Penguins/GrinderPenguin.gd" id="1_i53y7"]
+[ext_resource type="Texture2D" uid="uid://ofqvptu2r4jm" path="res://Penguins/Images/PH_Penguin.png" id="2_yrmhr"]
+[ext_resource type="PackedScene" uid="uid://dtcjp6ra2vutg" path="res://Penguins/Images/PenguinAnims.tscn" id="3_bvvhc"]
+
+[sub_resource type="Curve2D" id="Curve2D_8bad5"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -500, 0)
+}
+point_count = 2
+
+[node name="GrinderPenguin" type="Path2D" groups=["Volatile"]]
+curve = SubResource("Curve2D_8bad5")
+script = ExtResource("1_i53y7")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotation = 3.14159
+rotates = false
+cubic_interp = false
+loop = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
+visible = false
+z_index = 200
+position = Vector2(0, 16)
+rotation = 3.14159
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_yrmhr")
+
+[node name="PenguinAnims" parent="PathFollow2D" instance=ExtResource("3_bvvhc")]
+rotation = 3.14159
+scale = Vector2(0.15, 0.15)
+
+[node name="GatherTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DepositTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="change_anim" from="." to="PathFollow2D/PenguinAnims" method="_on_change_anim"]
+[connection signal="change_dir" from="." to="PathFollow2D/PenguinAnims" method="_on_change_dir"]

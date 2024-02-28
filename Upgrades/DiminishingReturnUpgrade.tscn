@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btpxcr73jm1q6"]
+
+[ext_resource type="Script" path="res://Upgrades/Scripts/DiminishingReturnUpgrade.gd" id="1_dn3lr"]
+
+[node name="DiminishingReturnUpgrade" type="Node"]
+script = ExtResource("1_dn3lr")

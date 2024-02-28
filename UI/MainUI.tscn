@@ -1,0 +1,484 @@
+[gd_scene load_steps=17 format=3 uid="uid://d0qiy71atm05d"]
+
+[ext_resource type="Script" path="res://UI/MainUI.gd" id="1_8nivd"]
+[ext_resource type="Texture2D" uid="uid://cq7v0oi5ekfhx" path="res://UI/Images/Wood_Sign.png" id="2_ffu4r"]
+[ext_resource type="PackedScene" uid="uid://bftdqf6nbd8hc" path="res://UI/Coins/PencoinTextureRect.tscn" id="2_jfbc5"]
+[ext_resource type="PackedScene" uid="uid://c12lrljtkq2of" path="res://UI/Coins/PengoldTextureRect.tscn" id="3_d3mr7"]
+[ext_resource type="Texture2D" uid="uid://be02mrqpxrsdx" path="res://Buildings/Mines/Images/ChainLink.png" id="3_yhcn7"]
+[ext_resource type="Texture2D" uid="uid://bc4jvv6p7hubk" path="res://UI/Images/Metal_Sign.png" id="6_dahar"]
+[ext_resource type="PackedScene" uid="uid://cb7jwy0j433ca" path="res://UI/Spin/LoadAnim.tscn" id="7_vx8km"]
+[ext_resource type="PackedScene" uid="uid://c4jwbqqjhbpe7" path="res://Buildings/gold_upgrades.tscn" id="8_l5u58"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_36l1y"]
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lvech"]
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1cbj7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cgi0i"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g25dk"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxr76"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_leh10"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8f7k6"]
+font_size = 8
+
+[node name="MainUI" type="CanvasLayer"]
+script = ExtResource("1_8nivd")
+
+[node name="Sign" type="TextureRect" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 188.0
+offset_bottom = 98.0
+texture = ExtResource("2_ffu4r")
+expand_mode = 1
+
+[node name="Chains" type="TextureRect" parent="Sign"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = -12.0
+offset_right = 166.0
+offset_bottom = 138.0
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("3_yhcn7")
+expand_mode = 1
+
+[node name="Chains2" type="TextureRect" parent="Sign"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 144.0
+offset_top = -12.0
+offset_right = 294.0
+offset_bottom = 138.0
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("3_yhcn7")
+expand_mode = 1
+
+[node name="PencoinTextureRect" parent="Sign" instance=ExtResource("2_jfbc5")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 49.0
+offset_bottom = 41.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Label" type="Label" parent="Sign/PencoinTextureRect"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -7.5
+offset_right = 163.0
+offset_bottom = 7.5
+grow_vertical = 2
+text = "1000000"
+label_settings = SubResource("LabelSettings_36l1y")
+vertical_alignment = 1
+
+[node name="PengoldTextureRect" parent="Sign" instance=ExtResource("3_d3mr7")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 23.0
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 73.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Label" type="Label" parent="Sign/PengoldTextureRect"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = -11.0
+offset_right = 164.0
+offset_bottom = 4.0
+grow_vertical = 2
+text = "1000000"
+label_settings = SubResource("LabelSettings_lvech")
+vertical_alignment = 2
+
+[node name="ReturnToSurface" type="Button" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.975
+offset_top = 18.0
+offset_right = 78.975
+offset_bottom = 49.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1cbj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cgi0i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g25dk")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jxr76")
+theme_override_styles/focus = SubResource("StyleBoxFlat_leh10")
+text = "Return to Surface"
+
+[node name="TextureRect" type="NinePatchRect" parent="ReturnToSurface"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -2.0
+offset_right = 300.995
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("6_dahar")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="Menu" type="Button" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 514.0
+offset_top = 21.0
+offset_right = 559.0
+offset_bottom = 44.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1cbj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cgi0i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g25dk")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jxr76")
+theme_override_styles/focus = SubResource("StyleBoxFlat_leh10")
+text = "Menu"
+
+[node name="TextureRect" type="NinePatchRect" parent="Menu"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -4.0
+offset_right = 129.93
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("6_dahar")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="PauseMenu" type="NinePatchRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -115.0
+offset_right = 125.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ffu4r")
+patch_margin_left = 41
+patch_margin_top = 57
+patch_margin_right = 35
+patch_margin_bottom = 51
+
+[node name="Close" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.975
+offset_top = 42.0
+offset_right = 78.975
+offset_bottom = 73.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1cbj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cgi0i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g25dk")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jxr76")
+theme_override_styles/focus = SubResource("StyleBoxFlat_leh10")
+text = "Close"
+
+[node name="TextureRect" type="NinePatchRect" parent="PauseMenu/Close"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -2.0
+offset_right = 300.995
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("6_dahar")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="Save" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.5
+offset_top = 80.0
+offset_right = 79.5
+offset_bottom = 111.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1cbj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cgi0i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g25dk")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jxr76")
+theme_override_styles/focus = SubResource("StyleBoxFlat_leh10")
+text = "Save"
+
+[node name="TextureRect" type="NinePatchRect" parent="PauseMenu/Save"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -2.0
+offset_right = 300.995
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("6_dahar")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="MainMenu" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.975
+offset_top = 117.0
+offset_right = 78.975
+offset_bottom = 148.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1cbj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cgi0i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g25dk")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jxr76")
+theme_override_styles/focus = SubResource("StyleBoxFlat_leh10")
+text = "Return to Menu*"
+
+[node name="TextureRect" type="NinePatchRect" parent="PauseMenu/MainMenu"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -2.0
+offset_right = 300.995
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("6_dahar")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="Quit" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.975
+offset_top = 157.0
+offset_right = 78.975
+offset_bottom = 188.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.403922, 0.407843, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0.392157, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_1cbj7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cgi0i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g25dk")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jxr76")
+theme_override_styles/focus = SubResource("StyleBoxFlat_leh10")
+text = "Quit*"
+
+[node name="TextureRect" type="NinePatchRect" parent="PauseMenu/Quit"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -2.0
+offset_right = 300.995
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.355, 0.355)
+texture = ExtResource("6_dahar")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="Label" type="Label" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -35.0
+offset_right = 49.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "*Your game will be saved"
+label_settings = SubResource("LabelSettings_8f7k6")
+
+[node name="LoadAnim" parent="." instance=ExtResource("7_vx8km")]
+visible = false
+position = Vector2(43, 604)
+scale = Vector2(0.2, 0.2)
+
+[node name="HideAnim" type="Timer" parent="LoadAnim"]
+wait_time = 0.5
+
+[node name="UpgradeUI" parent="." instance=ExtResource("8_l5u58")]
+visible = false
+
+[node name="Debug" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1049.0
+offset_top = 479.0
+offset_right = 1089.0
+offset_bottom = 519.0
+
+[node name="Button4" type="Button" parent="Debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = -9.0
+offset_right = 47.0
+offset_bottom = 22.0
+grow_horizontal = 0
+text = "Clear data"
+
+[node name="Button" type="Button" parent="Debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 27.0
+offset_right = 43.0
+offset_bottom = 58.0
+grow_horizontal = 0
+text = "Save data"
+
+[node name="Button2" type="Button" parent="Debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 70.0
+offset_right = 45.0
+offset_bottom = 101.0
+grow_horizontal = 0
+text = "Load data"
+
+[node name="Button3" type="Button" parent="Debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 115.0
+offset_right = 25.0
+offset_bottom = 146.0
+grow_horizontal = 0
+text = "Restart"
+
+[connection signal="pressed" from="ReturnToSurface" to="." method="_on_return_to_surface_pressed"]
+[connection signal="pressed" from="Menu" to="PauseMenu" method="show"]
+[connection signal="pressed" from="PauseMenu/Close" to="PauseMenu" method="hide"]
+[connection signal="pressed" from="PauseMenu/Save" to="." method="btn_save"]
+[connection signal="pressed" from="PauseMenu/MainMenu" to="." method="btn_main_menu"]
+[connection signal="pressed" from="PauseMenu/Quit" to="." method="btn_quit"]
+[connection signal="timeout" from="LoadAnim/HideAnim" to="LoadAnim" method="hide"]
+[connection signal="pressed" from="Debug/Button4" to="." method="btn_reset"]
+[connection signal="pressed" from="Debug/Button" to="." method="btn_save"]
+[connection signal="pressed" from="Debug/Button2" to="." method="btn_load"]
+[connection signal="pressed" from="Debug/Button2" to="Debug/Button4" method="set_disabled" binds= [true]]
+[connection signal="pressed" from="Debug/Button2" to="Debug/Button2" method="set_disabled" binds= [true]]
+[connection signal="pressed" from="Debug/Button3" to="." method="btn_restart"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5mu5x2knw7yl"]
+
+[ext_resource type="Texture2D" uid="uid://42m8dlr17t26" path="res://UI/Coins/PH_Coin_Bg.png" id="1_lrwqp"]
+[ext_resource type="Texture2D" uid="uid://5tqbcy65jx00" path="res://UI/Coins/PH_Coin_Img.png" id="2_qcibn"]
+
+[node name="CoinTextureRect" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_lrwqp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_qcibn")
+expand_mode = 1
+stretch_mode = 5

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgsmy6ouxtl1e"]
+
+[ext_resource type="Texture2D" uid="uid://dbfd1jj44aqcm" path="res://Environment/BuildingIcePathChunk.png" id="1_whjq4"]
+[ext_resource type="Texture2D" uid="uid://bdf6brod66ctp" path="res://Environment/IceChunkWall.png" id="2_5inft"]
+
+[node name="Pillar" type="Node2D"]
+scale = Vector2(3, 1)
+
+[node name="Path" type="Sprite2D" parent="."]
+scale = Vector2(0.16, 0.25)
+texture = ExtResource("1_whjq4")
+offset = Vector2(0, 100)
+
+[node name="Walls" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(0, 28)
+scale = Vector2(0.16, 0.25)
+texture = ExtResource("2_5inft")
+offset = Vector2(0, 256)

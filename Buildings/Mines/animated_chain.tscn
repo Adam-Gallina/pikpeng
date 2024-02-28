@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bula04047du1y"]
+
+[ext_resource type="Texture2D" uid="uid://be02mrqpxrsdx" path="res://Buildings/Mines/Images/ChainLink.png" id="1_ws0ed"]
+
+[node name="animated_chain" type="Sprite2D"]
+z_index = -7
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("1_ws0ed")
+offset = Vector2(-6.71, 0)
+vframes = 10

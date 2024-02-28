@@ -1,0 +1,142 @@
+[gd_scene load_steps=18 format=3 uid="uid://cf7lio26bkaw7"]
+
+[ext_resource type="Script" path="res://Buildings/Mines/GeodeMineT2.gd" id="1_wvdef"]
+[ext_resource type="PackedScene" uid="uid://dp3jcfr5wtglr" path="res://Penguins/MinePenguin.tscn" id="2_vwibx"]
+[ext_resource type="PackedScene" uid="uid://bd0ww0affqit1" path="res://Buildings/Mines/GeodeMineT3.tscn" id="2_wlx2n"]
+[ext_resource type="Texture2D" uid="uid://vodcvn3fakvb" path="res://Buildings/Mines/Images/PH_IcebergMine_T2.png" id="4_dcdyb"]
+[ext_resource type="PackedScene" uid="uid://cy3lmb4agy3pw" path="res://UI/Coins/PencoinGainAnim.tscn" id="4_gyps5"]
+[ext_resource type="PackedScene" uid="uid://b4uwyfasv0oev" path="res://UI/WarningSymbol.tscn" id="5_0c3ug"]
+[ext_resource type="PackedScene" uid="uid://5ie5maptxhem" path="res://UI/Coins/PengoldGainAnim.tscn" id="5_1xl6r"]
+[ext_resource type="Texture2D" uid="uid://brorrggtqtcsl" path="res://Buildings/Mines/Images/PH_IcebergMine_outline.png" id="5_s4ggg"]
+[ext_resource type="PackedScene" uid="uid://bytcpraxm8dp4" path="res://Buildings/BuildingInside.tscn" id="6_as4go"]
+[ext_resource type="PackedScene" uid="uid://xx51ktriaj5h" path="res://UI/CountSlider.tscn" id="6_ejfta"]
+[ext_resource type="Texture2D" uid="uid://1wef1nnkonx5" path="res://Buildings/Mines/Images/MineBottom.png" id="8_rkgob"]
+[ext_resource type="Texture2D" uid="uid://cddp27bd2u4ju" path="res://Buildings/Mines/Images/Auto_Mine_Bottom.png" id="9_1er4y"]
+[ext_resource type="Texture2D" uid="uid://co14bsi1xb4u8" path="res://Buildings/Mines/Images/Bucket_Full.png" id="10_6by1h"]
+[ext_resource type="Script" path="res://Buildings/SpriteTiler.gd" id="11_db3yw"]
+[ext_resource type="PackedScene" uid="uid://bula04047du1y" path="res://Buildings/Mines/animated_chain.tscn" id="12_h20s8"]
+[ext_resource type="PackedScene" uid="uid://bjo6wb5vplnv1" path="res://Buildings/Mines/mine_upgrades.tscn" id="13_r00f8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jofef"]
+size = Vector2(110, 95)
+
+[node name="GeodeMineT2" type="Node2D" node_paths=PackedStringArray("BucketNode", "penguin_parent", "penguin_spawn_point", "deposit_point", "withdraw_point") groups=["Persist", "Volatile"]]
+script = ExtResource("1_wvdef")
+BucketNode = NodePath("Inside/Bucket")
+next_tier = ExtResource("2_wlx2n")
+penguin_scene = ExtResource("2_vwibx")
+penguin_parent = NodePath(".")
+penguin_spawn_point = NodePath("Inside/MineDeposit")
+anim_offset = Vector2(0, -150)
+coin_anim = ExtResource("4_gyps5")
+gold_anim = ExtResource("5_1xl6r")
+deposit_point = NodePath("Inside/MineDeposit")
+withdraw_point = NodePath(".")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 20
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_dcdyb")
+offset = Vector2(-9.675, -171.165)
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+position = Vector2(0, 148.16)
+scale = Vector2(4, 4)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(0, -78.04)
+shape = SubResource("RectangleShape2D_jofef")
+
+[node name="Outline" type="Sprite2D" parent="Sprite2D"]
+z_index = -1
+texture = ExtResource("5_s4ggg")
+offset = Vector2(-9.675, -171.165)
+
+[node name="CountSlider" parent="." instance=ExtResource("6_ejfta")]
+offset_left = -50.0
+offset_top = -128.0
+offset_right = 50.0
+offset_bottom = -118.0
+value = 21.0
+fill_mode = 0
+
+[node name="WarningSymbol" parent="CountSlider" instance=ExtResource("5_0c3ug")]
+layout_mode = 1
+offset_left = 39.0
+offset_top = -11.0
+offset_right = 69.0
+offset_bottom = 19.0
+scale = Vector2(0.75, 0.75)
+
+[node name="Inside" parent="." instance=ExtResource("6_as4go")]
+
+[node name="MineBottom" type="Sprite2D" parent="Inside"]
+self_modulate = Color(0.521569, 0.521569, 0.521569, 1)
+z_index = -5
+position = Vector2(0, 86)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_rkgob")
+offset = Vector2(-9.555, -146.42)
+
+[node name="MineDeposit" type="Sprite2D" parent="Inside"]
+self_modulate = Color(0.521569, 0.521569, 0.521569, 1)
+z_index = -5
+position = Vector2(0, 140)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_1er4y")
+offset = Vector2(-2.98, -32.265)
+
+[node name="Bucket" type="Sprite2D" parent="Inside"]
+z_index = -6
+position = Vector2(1.13687e-13, 128)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("10_6by1h")
+offset = Vector2(36.48, -70.325)
+
+[node name="LeftChain" type="Node2D" parent="Inside" node_paths=PackedStringArray("TileStart", "TileEnd")]
+position = Vector2(-7, 0)
+script = ExtResource("11_db3yw")
+TiledScene = ExtResource("12_h20s8")
+TileSize = 2.5
+TileStart = NodePath("../MineBottom")
+TileEnd = NodePath("../MineDeposit")
+AnimSpeed = 0.1
+ReverseAnim = true
+
+[node name="RightChain" type="Node2D" parent="Inside" node_paths=PackedStringArray("TileStart", "TileEnd")]
+position = Vector2(7, 0)
+script = ExtResource("11_db3yw")
+TiledScene = ExtResource("12_h20s8")
+TileSize = 2.5
+TileStart = NodePath("../MineBottom")
+TileEnd = NodePath("../MineDeposit")
+AnimSpeed = 0.1
+
+[node name="UpgradeUI" parent="." instance=ExtResource("13_r00f8")]
+
+[node name="MineTier" parent="UpgradeUI/Sign/Sidebar/UpgradeTier" index="2"]
+level = 3
+base = 75.0
+
+[connection signal="on_focus" from="." to="Sprite2D/Outline" method="show" unbinds=1]
+[connection signal="on_focus" from="." to="UpgradeUI" method="show" unbinds=1]
+[connection signal="on_unfocus" from="." to="Sprite2D/Outline" method="hide" unbinds=1]
+[connection signal="on_unfocus" from="." to="UpgradeUI" method="hide" unbinds=1]
+[connection signal="storage_changed" from="." to="CountSlider" method="_set_fill"]
+[connection signal="storage_emptied" from="." to="CountSlider/WarningSymbol" method="hide" unbinds=1]
+[connection signal="storage_filled" from="." to="CountSlider/WarningSymbol" method="show" unbinds=1]
+[connection signal="input_event" from="Sprite2D/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="on_upgrade_mine_storage" from="UpgradeUI" to="." method="on_upgrade_max_storage"]
+[connection signal="on_upgrade_peng_count" from="UpgradeUI" to="." method="on_upgrade_peng_count"]
+[connection signal="on_upgrade_tier" from="UpgradeUI" to="." method="on_upgrade_building_tier"]
+
+[editable path="UpgradeUI"]
+[editable path="UpgradeUI/Sign/Sidebar/UpgradeTier"]
+[editable path="UpgradeUI/Sign/Sidebar/MineStorage"]
+[editable path="UpgradeUI/Sign/Sidebar/MaxDepth"]
+[editable path="UpgradeUI/Sign/Sidebar/BucketSpeed"]
+[editable path="UpgradeUI/Sign/Sidebar/PengCount"]
+[editable path="UpgradeUI/Sign/Sidebar/PengSpeed"]
+[editable path="UpgradeUI/Sign/Sidebar/PengCarry"]
+[editable path="UpgradeUI/Sign/Sidebar/PengMineStrength"]

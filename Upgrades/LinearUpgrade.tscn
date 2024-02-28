@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd4fwjd3o8wbw"]
+
+[ext_resource type="Script" path="res://Upgrades/Scripts/LinearUpgrade.gd" id="1_h28re"]
+
+[node name="LinearUpgrade" type="Node"]
+script = ExtResource("1_h28re")
